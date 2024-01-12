@@ -1,2 +1,6 @@
+from random import choices, randint
+
 def get_reply(user_input):
-    raise NotImplementedError('Code is missing')
+    lowered = user_input.lower()
+
+    if lowered == '':
