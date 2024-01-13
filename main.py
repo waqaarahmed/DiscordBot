@@ -5,17 +5,17 @@ from replies import get_reply
 from discord import Intents, Client, Message
 
 #loading discord token
-token = load_dotenv(os.getenv('DISCORD_TOKEN'))
-print(token)
+load_dotenv()
+token = os.getenv('DISCORD_TOKEN')
 
 #setting up bot
 #1 setting up intents
 intents = Intents.default()
 intents.message_content = True
 #2 setting up clients
-clients = Client(intents=intents)
+client = Client(intents=intents)
 
-async def send_message(user_message):
+async def send_message(message, user_message):
     if not user_message:
         print('Empty message because intents were not enabled')
         return
@@ -25,4 +25,28 @@ async def send_message(user_message):
 
     try:
         reply = get_reply(user_message)
-        await message.author.send(reply) if is_private else message.channel.send(reply)
+        await message.author.send(reply) if is_private else await message.channel.send(reply)
+    except Exception as e:
+        print(e)
+@client.event
+async  def on_ready():
+    print(f'{client.user} is now running')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    username = str(message.author)
+    user_message = message.content
+    channel = str(message.channel)
+
+    print(f'[{channel}] {username}: "{user_message}"')
+    await send_message(message, user_message)
+
+def main() -> None:
+    client.run(token=token)
+
+
+if __name__ == '__main__':
+    main()
