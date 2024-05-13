@@ -20,6 +20,13 @@ This project implements a basic Discord bot using Python that interacts with use
 ### 2. Clone this repository:
 
 Bash
-`git clone https://your-github-repo-url.git`
+`git clone [https://your-github-repo-url.git](https://github.com/waqaarahmed/DiscordBot.git)`
+
+### 3. Install dependencies:
+
+Bash
+`pip install discord dotenv`
+
+
 
 
